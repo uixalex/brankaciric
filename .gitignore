@@ -1,0 +1,7 @@
+# original camera/export files — superseded by the faststart copies in /videos
+/*.mp4
+
+# local tooling
+.vercel
+.DS_Store
+Thumbs.db

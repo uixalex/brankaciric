@@ -127,8 +127,6 @@ ul{margin:0;padding:0;list-style:none}
   display:flex;
   align-items:baseline;
   gap:clamp(16px,3vw,36px);
-  padding-top:26px;
-  border-top:1px solid var(--rule);
   margin-bottom:clamp(40px,6vw,72px);
 }
 .sec-head__num{
@@ -250,12 +248,64 @@ ul{margin:0;padding:0;list-style:none}
 .nav__links a:hover{ color:var(--ink) }
 .nav__links a:hover::after{ transform:scaleX(1) }
 
+/* ---- burger (phones) ---- */
+.nav__burger{
+  display:none;
+  flex-direction:column; justify-content:center; gap:5px;
+  width:44px; height:44px; margin-right:-11px;
+  background:none; border:0; padding:0; cursor:pointer;
+}
+.nav__burger span{
+  display:block; width:23px; height:1.5px;
+  margin-inline:auto;
+  background:var(--ink);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1);
+}
+.nav__burger.is-open span:nth-child(1){ transform:translateY(3.25px) rotate(45deg) }
+.nav__burger.is-open span:nth-child(2){ transform:translateY(-3.25px) rotate(-45deg) }
+
+.menu{
+  position:fixed; inset:0; z-index:55;
+  display:flex; flex-direction:column; justify-content:center;
+  gap:4px;
+  padding:92px var(--gutter) 44px;
+  background:var(--bg);
+  opacity:0; visibility:hidden;
+  transition:opacity .3s ease, visibility .3s;
+}
+.menu.is-open{ opacity:1; visibility:visible }
+.menu__link{
+  display:flex; align-items:baseline; gap:14px;
+  padding-block:18px;
+  border-bottom:1px solid var(--rule);
+  font-size:clamp(1.7rem,7.5vw,2.4rem);
+  font-weight:700; letter-spacing:-.04em; line-height:1;
+  color:var(--ink); text-decoration:none;
+}
+.menu__link span{
+  font-size:12px; font-weight:500; letter-spacing:.05em;
+  color:var(--ink-muted);
+}
+.menu__social{ display:flex; flex-wrap:wrap; gap:12px 22px; margin-top:34px }
+.menu__social a{
+  font-size:13px; font-weight:500;
+  color:var(--ink-soft); text-decoration:none;
+  padding-bottom:3px; border-bottom:1px solid var(--rule);
+}
+
 /* ============================================================
    HERO — no name, no photo. Statement only.
    ============================================================ */
-.hero{ padding-top:clamp(64px,10vw,132px); padding-bottom:clamp(56px,8vw,104px) }
+.hero{
+  display:flex;
+  align-items:center;
+  min-height:82vh;
+  padding-top:clamp(88px,13vw,176px);
+  padding-bottom:clamp(80px,11vw,148px);
+}
+.hero > .shell{ width:100% }
 .hero__statement{
-  margin-top:28px;
+  margin-top:0;
   max-width:23ch;
   font-size:clamp(2.05rem,5.4vw,4.5rem);
   font-weight:700;
@@ -504,7 +554,7 @@ ul{margin:0;padding:0;list-style:none}
    CONTACT + FOOTER
    ============================================================ */
 .contact__title{
-  margin-top:26px;
+  margin-top:0;
   max-width:14ch;
   font-size:clamp(2.5rem,7.6vw,6.2rem);
   font-weight:700;
@@ -614,10 +664,14 @@ body.is-locked{ overflow:hidden }
   }
   .row__text, .row .chips{ grid-column:2 / -1 }
 }
+/* phones: the inline links give way to the burger */
+@media (max-width:768px){
+  .nav__links{ display:none }
+  .nav__burger{ display:flex }
+  .hero{ min-height:76vh }
+}
 @media (max-width:720px){
   .nav__inner{ min-height:56px }
-  .nav__links{ gap:13px }
-  .nav__links a{ font-size:10.5px; letter-spacing:.05em }
   .hero__foot{ align-items:flex-start }
   .work__play{ width:46px; height:46px }
   .work__play svg{ width:11px; height:13px }
@@ -626,8 +680,6 @@ body.is-locked{ overflow:hidden }
   .modal__close{ top:auto; bottom:-40px; right:50%; transform:translateX(50%) }
 }
 @media (max-width:430px){
-  .nav__links{ gap:9px }
-  .nav__links a{ font-size:9.5px; letter-spacing:.01em }
   .kpi{ padding:18px 16px }
   .social{ flex-wrap:wrap }
 }
@@ -645,8 +697,25 @@ body.is-locked{ overflow:hidden }
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
+
+    <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span>
+    </button>
   </div>
 </header>
+
+<nav class="menu" id="menu" aria-label="Mobile navigation">
+  <a class="menu__link" href="#about"><span>01</span>About</a>
+  <a class="menu__link" href="#results"><span>02</span>Results</a>
+  <a class="menu__link" href="#creative"><span>03</span>Creative</a>
+  <a class="menu__link" href="#skills"><span>04</span>Skills</a>
+  <a class="menu__link" href="#contact"><span>05</span>Contact</a>
+  <div class="menu__social">
+    <a href="https://www.linkedin.com/in/branka-ciric/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://dribbble.com/Brankaciric" target="_blank" rel="noopener">Dribbble</a>
+    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ciricbranka55@gmail.com" target="_blank" rel="noopener">Email</a>
+  </div>
+</nav>
 
 <main>
 
@@ -889,11 +958,6 @@ body.is-locked{ overflow:hidden }
   <!-- ============== CONTACT ============== -->
   <section class="section section--dark" id="contact">
     <div class="shell">
-      <div class="sec-head reveal">
-        <span class="sec-head__num">05</span>
-        <h2 class="sec-head__name">Contact</h2>
-      </div>
-
       <h3 class="contact__title reveal">Let's grow something <span class="em-serif">great</span><span class="dot">.</span></h3>
       <p class="contact__copy reveal">I'm open to opportunities in performance marketing, e-commerce growth, account management and digital strategy.</p>
 
@@ -1096,13 +1160,34 @@ if ('IntersectionObserver' in window){
 }
 
 /* ---------- nav: wash at the top, cream bar once scrolled ---------- */
-(function stickyNav(){
-  const nav = document.querySelector('.nav');
-  if (!nav) return;
-  const sync = () => nav.classList.toggle('is-stuck', window.scrollY > 24);
-  sync();
-  window.addEventListener('scroll', sync, { passive: true });
-})();
+const nav = document.querySelector('.nav');
+const burger = document.querySelector('.nav__burger');
+const menu = document.getElementById('menu');
+let menuOpen = false;
+
+function syncNav(){
+  /* the open menu is cream, so the bar above it drops the hero wash too */
+  nav.classList.toggle('is-stuck', menuOpen || window.scrollY > 24);
+}
+syncNav();
+window.addEventListener('scroll', syncNav, { passive: true });
+
+
+/* ---------- burger menu ---------- */
+function setMenu(open){
+  menuOpen = open;
+  menu.classList.toggle('is-open', open);
+  burger.classList.toggle('is-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  document.body.classList.toggle('is-locked', open);
+  syncNav();
+}
+
+burger.addEventListener('click', () => setMenu(!menuOpen));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) setMenu(false); });
+window.addEventListener('resize', () => { if (menuOpen && window.innerWidth > 768) setMenu(false); });
 
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
